@@ -2,17 +2,23 @@ let listaDeNumerosSorteados = [];
 let numeroSecreto = gerarNumeroPseudoaleatorio();
 let tentativas = 1;
 
+
 function gerarNumeroPseudoaleatorio() {
-   let numeroEscolhido = parseInt(Math.random() * 10 + 1);
-   if(listaDeNumerosSorteados.includes(numeroEscolhido)) {
-      return gerarNumeroPseudoaleatorio();
+   let numeroGerado = parseInt(Math.random() * 10 + 1);
+   console.log(numeroGerado);
+   return verificarNumerosGerados(numeroGerado); // Verifica se o número já foi gerado
+}
+
+function verificarNumerosGerados(numeroGerado) {
+   if (listaDeNumerosSorteados.includes(numeroGerado)) {
+      return gerarNumeroPseudoaleatorio(); // Chama novamente se o número já foi sorteado
    } else {
-      listaDeNumerosSorteados.push(numeroEscolhido);
+      listaDeNumerosSorteados.push(numeroGerado);
       console.log(listaDeNumerosSorteados);
-      verificarChute(numeroEscolhido);
-      return numeroEscolhido;
+      return numeroGerado; // Retorna o número gerado
    }
 }
+
 //let titulo = document.querySelector('h1');
 //titulo.innerHTML = 'Jogo do Número Secreto';
 
@@ -39,7 +45,7 @@ function verificarChute() {
       );
       exibirTextoNaTela('p', mensagemTentativas);
       document.getElementById('reiniciar').removeAttribute('disabled');
-   
+         
    } else {
       if (chute > numeroSecreto) {
          exibirTextoNaTela('h1', 'Não foi dessa vez!');
@@ -58,9 +64,10 @@ function verificarChute() {
  }
 
 function reiniciarJogo() {
-   let numeroSecreto = gerarNumeroPseudoaleatorio();
+   numeroSecreto = gerarNumeroPseudoaleatorio();
    tentativas = 1;
    limparCampo();
    exibirMensagemInicial();
    document.getElementById('reiniciar').setAttribute('disabled', true);
+   verificarNumerosGerados();
 }
